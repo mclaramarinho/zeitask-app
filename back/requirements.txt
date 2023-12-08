@@ -1,0 +1,4 @@
+Flask
+Firebase
+Firebase-admin
+pyrebase4
