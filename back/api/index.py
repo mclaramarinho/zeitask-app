@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 fb = pyrebase.initialize_app(firebaseConfig)
 auth = fb.auth()
-cred = credentials.Certificate('methods/setup.json')
+cred = credentials.Certificate('methods/setup1.json')
 firebase_admin.initialize_app(cred)
 
 
