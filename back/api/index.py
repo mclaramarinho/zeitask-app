@@ -1,18 +1,10 @@
-from flask import Flask, jsonify
+from flask import Flask
 from methods.auth_queries import query_email_availability, query_username_availability, create_user
 import firebase_admin
 from firebase_admin import credentials, auth
 import pyrebase
+from setup import firebaseConfig
 
-firebaseConfig = {
-  "apiKey": "AIzaSyAP-ytff2KHx1EkKDjnncLu2EWx5SL2EPc",
-  "authDomain": "zeitask.firebaseapp.com",
-  "projectId": "zeitask",
-  "storageBucket": "zeitask.appspot.com",
-  "messagingSenderId": "708185522867",
-  "appId": "1:708185522867:web:4d0cde2fe490945e2ee6c6",
-  "measurementId": "G-4LC53J2RGY"
-}
 
 app = Flask(__name__)
 
