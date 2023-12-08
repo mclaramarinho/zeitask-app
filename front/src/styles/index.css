@@ -1,0 +1,61 @@
+
+
+body{
+    width: 100vw !important;
+    box-sizing: border-box !important;
+    position: absolute;
+}
+
+
+/* WIDTHS */
+.MW-90{
+    max-width: 90vw;
+}
+
+
+/* MARGINS */
+.gutter-x-0{
+    --bs-gutter-x: 0 !important;
+}
+
+
+/* FONT WEIGHTS */
+.light{
+    font-weight: lighter !important;
+}
+.normal{
+    font-weight: 400 !important;
+}
+.bolder{
+    font-weight: 700;
+}
+.black{
+    font-weight: 900 !important;
+}
+
+/* FONT SIZES */
+.f-13{
+    font-size: 13px !important;
+}
+.f-12{
+    font-size: 12px !important;
+}
+.f-10{
+    font-size: 10px !important;
+}
+
+/* LIST MARKERS */
+.v-mark{
+    color: green;
+    font-weight: 500;
+}
+.v-mark::marker{
+    content: "✓";
+    }
+.x-mark{
+    color: crimson;
+    font-weight: 400;
+}
+.x-mark::marker{
+    content: '✗';
+}
