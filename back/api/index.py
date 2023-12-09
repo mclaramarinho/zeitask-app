@@ -11,6 +11,7 @@ load_dotenv()
 private_key_id = os.environ.get('FIREBASE_PRIVATE_KEY_ID')
 private_key = os.environ.get('FIREBASE_PRIVATE_KEY')
 project_id = os.environ.get('FIREBASE_PROJECT_ID')
+FIREBASE_CONFIG = os.environ.get('FIREBASE_CONFIG')
 
 app = Flask(__name__)
 
