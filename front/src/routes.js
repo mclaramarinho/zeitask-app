@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
+import Dashboard from './pages/Dashboard';
 
 const routes = createBrowserRouter([
     {
@@ -24,6 +25,7 @@ const routes = createBrowserRouter([
         path: '/dashboard/:id',
         //go to dashboard page
         //id = displayName of firebase auth info
+        element: <Dashboard />
     },
     {
         path: '/dashboard/:id/profile',
