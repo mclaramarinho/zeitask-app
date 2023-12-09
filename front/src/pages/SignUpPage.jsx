@@ -48,7 +48,7 @@ function SignUpPage(){
     function handleSubmit(){
         //check regex
         //check availability of username and email in database
-        console.log(checkEmailAvailability(email))
+        // console.log(checkEmailAvailability(email))
     }
 
     function checkEmailDB(){

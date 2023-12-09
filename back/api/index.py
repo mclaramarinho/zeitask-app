@@ -14,6 +14,7 @@ project_id = os.environ.get('FIREBASE_PROJECT_ID')
 api_key = os.environ.get('API_KEY')
 app_id = os.environ.get('APP_ID')
 
+
 app = Flask(__name__)
 
 fb = initialize_app({
