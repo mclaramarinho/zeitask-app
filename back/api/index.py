@@ -49,6 +49,3 @@ def create_user_ep(email, username, pswd):
     x = create_user(email, username, pswd)
     return x
 
-
-if __name__ == "__main__":
-    app.run()
