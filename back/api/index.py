@@ -3,7 +3,7 @@ from methods.auth_queries import query_email_availability, query_username_availa
 import firebase_admin
 from firebase_admin import credentials
 from pyrebase import initialize_app
-from firebaseConfig import firebaseConfig
+from firebaseConfig import FIREBASE_CONFIG
 import os
 from dotenv import load_dotenv
 
@@ -14,7 +14,7 @@ project_id = os.environ.get('FIREBASE_PROJECT_ID')
 
 app = Flask(__name__)
 
-fb = initialize_app(firebaseConfig)
+fb = initialize_app(FIREBASE_CONFIG)
 auth = fb.auth()
 cred = credentials.Certificate({
     "type": "service_account",
@@ -31,7 +31,9 @@ cred = credentials.Certificate({
 })
 firebase_admin.initialize_app(cred)
 
-
+@app.route('/')
+def main_endpoint():
+    return "You should go to another endpoint."
 @app.route('/isEmailAvailable/<email>')
 def is_email_available(email):
     res = query_email_availability(email)
@@ -49,3 +51,5 @@ def create_user_ep(email, username, pswd):
     x = create_user(email, username, pswd)
     return x
 
+if __name__ == '__main__':
+    app.run()
