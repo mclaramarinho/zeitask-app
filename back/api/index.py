@@ -3,7 +3,7 @@ from methods.auth_queries import query_email_availability, query_username_availa
 import firebase_admin
 from firebase_admin import credentials
 from pyrebase import initialize_app
-#from firebaseConfig import FIREBASE_CONFIG
+from firebaseConfig import FIREBASE_CONFIG
 import os
 from dotenv import load_dotenv
 
@@ -11,11 +11,20 @@ load_dotenv()
 private_key_id = os.environ.get('FIREBASE_PRIVATE_KEY_ID')
 private_key = os.environ.get('FIREBASE_PRIVATE_KEY')
 project_id = os.environ.get('FIREBASE_PROJECT_ID')
-FIREBASE_CONFIG = os.environ.get('FIREBASE_CONFIG')
+api_key = os.environ.get('API_KEY')
+app_id = os.environ.get('APP_ID')
 
 app = Flask(__name__)
 
-fb = initialize_app(FIREBASE_CONFIG)
+fb = initialize_app({
+  "apiKey": f"{api_key}",
+  "authDomain": "zeitask.firebaseapp.com",
+  "projectId": "zeitask",
+  "storageBucket": "zeitask.appspot.com",
+  "messagingSenderId": "708185522867",
+  "appId": f"{app_id}",
+  "measurementId": "G-4LC53J2RGY"
+})
 auth = fb.auth()
 cred = credentials.Certificate({
     "type": "service_account",
