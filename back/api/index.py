@@ -1,21 +1,21 @@
 from flask import Flask
 from methods.auth_queries import query_email_availability, query_username_availability, create_user
 import firebase_admin
-from firebase_admin import credentials, auth
-import pyrebase
-from setup import firebaseConfig
-from decouple import config
+from firebase_admin import credentials
+from pyrebase import initialize_app
+from firebaseConfig import firebaseConfig
+import os
+from dotenv import load_dotenv
 
-
-private_key_id = config('FIREBASE_PRIVATE_KEY_ID')
-private_key = config('FIREBASE_PRIVATE_KEY')
-project_id = config('FIREBASE_PROJECT_ID')
+load_dotenv()
+private_key_id = os.getenv('FIREBASE_PRIVATE_KEY_ID')
+private_key = os.getenv('FIREBASE_PRIVATE_KEY')
+project_id = os.getenv('FIREBASE_PROJECT_ID')
 
 app = Flask(__name__)
 
-fb = pyrebase.initialize_app(firebaseConfig)
+fb = initialize_app(firebaseConfig)
 auth = fb.auth()
-#cred = credentials.Certificate('methods/setup1.json')
 cred = credentials.Certificate({
     "type": "service_account",
     "project_id": f"{project_id}",
