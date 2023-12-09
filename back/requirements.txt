@@ -3,3 +3,4 @@ Firebase
 Firebase-admin
 pyrebase4
 python-dotenv
+Gunicorn
