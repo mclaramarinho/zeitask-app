@@ -17,21 +17,21 @@ app_id = os.environ.get('APP_ID')
 app = Flask(__name__)
 
 fb = initialize_app({
-  "apiKey": f"{api_key}",
+  "apiKey": api_key,
   "authDomain": "zeitask.firebaseapp.com",
   "projectId": "zeitask",
   "storageBucket": "zeitask.appspot.com",
   "messagingSenderId": "708185522867",
-  "appId": f"{app_id}",
+  "appId": app_id,
   "measurementId": "G-4LC53J2RGY",
   "databaseURL": "https://placeholder.firebaseio.com"  # Dummy URL
 })
 auth = fb.auth()
 cred = credentials.Certificate({
     "type": "service_account",
-    "project_id": f"{project_id}",
-    "private_key_id": f"{private_key_id}",
-    "private_key": f"{private_key}",
+    "project_id": project_id,
+    "private_key_id": private_key_id,
+    "private_key": private_key,
     "client_email": "firebase-adminsdk-66v42@zeitask.iam.gserviceaccount.com",
     "client_id": "101692490798999468550",
     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
