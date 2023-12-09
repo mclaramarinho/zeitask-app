@@ -3,7 +3,7 @@ from methods.auth_queries import query_email_availability, query_username_availa
 import firebase_admin
 from firebase_admin import credentials
 from pyrebase import initialize_app
-from firebaseConfig import FIREBASE_CONFIG
+#from firebaseConfig import FIREBASE_CONFIG
 import os
 from dotenv import load_dotenv
 
