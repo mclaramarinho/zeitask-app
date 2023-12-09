@@ -4,6 +4,10 @@ function setLoginCookies(userInfo){
     Cookies.set('userLoginInfo', JSON.stringify(userInfo), {expires: 15, secure: true})
 }
 function getLoginCookies(){
-    return JSON.parse(Cookies.get('userLoginInfo'))
+    try{
+        return JSON.parse(Cookies.get('userLoginInfo'))
+    }catch(err){
+        return err
+    }
 }
 export { setLoginCookies, getLoginCookies }
