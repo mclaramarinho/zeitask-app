@@ -1,21 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LogoHeader from "../components/LogoHeader";
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import {TextField} from "@mui/material";
 import Button from "../components/Button";
-import { signIn } from "../firebase/auth";
+import { getUserInfo, signIn } from "../firebase/auth";
+import { getUserToDos } from "../firebase/db";
+import { useNavigate } from "react-router-dom";
 
 
 function LoginPage(){
     const [email, setEmail] = useState();
     const [pswd, setPswd] = useState();
     const [isSubmitted, setIsSubmitted] = useState(true);
+    const [showLoader, setShowLoader] = useState(false);
+    
+    const navigate = useNavigate();
+
+    useEffect(() =>{
+        
+    })
+
 
 
     async function submit(){
         const result = await signIn(email, pswd).then(v => v);
+        
         //if false show error message
+        //if true show spinner
         setIsSubmitted(result);
+        setShowLoader(result)
+        if(result){
+            const username = getUserInfo()
+            getUserToDos(username).then(v => {
+                navigate(`/dashboard/${username}`)            
+            })
+        }
     }
 
     return(
@@ -39,8 +58,9 @@ function LoginPage(){
 
                         {!isSubmitted && <p>Ooops... It seems like your info invalid.</p>}
 
-                        <Button color="black" size="medium" label="LOGIN" action={submit}/>
-                    </Box>
+                        {!showLoader && <Button color="black" size="medium" label="LOGIN" action={submit}/>}
+                        {showLoader && <CircularProgress />}
+                    </Box>  
 
                     <div className="col-12 col-sm-1 col-md-3 col-lg-4 col-xxl-5"></div>
                 </div>
