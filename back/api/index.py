@@ -8,9 +8,9 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-private_key_id = os.getenv('FIREBASE_PRIVATE_KEY_ID')
-private_key = os.getenv('FIREBASE_PRIVATE_KEY')
-project_id = os.getenv('FIREBASE_PROJECT_ID')
+private_key_id = os.environ.get('FIREBASE_PRIVATE_KEY_ID')
+private_key = os.environ.get('FIREBASE_PRIVATE_KEY')
+project_id = os.environ.get('FIREBASE_PROJECT_ID')
 
 app = Flask(__name__)
 
