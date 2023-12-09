@@ -23,7 +23,8 @@ fb = initialize_app({
   "storageBucket": "zeitask.appspot.com",
   "messagingSenderId": "708185522867",
   "appId": f"{app_id}",
-  "measurementId": "G-4LC53J2RGY"
+  "measurementId": "G-4LC53J2RGY",
+  "databaseURL": "https://placeholder.firebaseio.com"  # Dummy URL
 })
 auth = fb.auth()
 cred = credentials.Certificate({
