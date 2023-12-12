@@ -11,6 +11,22 @@ body{
 .MW-90{
     max-width: 90vw;
 }
+.border-box{
+    box-sizing: border-box !important;
+}
+
+
+/* RESPONSIVITY */
+@media (max-width: 764px) {
+    .hide-mobile{
+        display: none !important;
+    }
+}
+@media (min-width: 764px) {
+    .hide-mobile{
+        display: inline-block !important;
+    }
+}
 
 
 /* MARGINS */
@@ -18,6 +34,11 @@ body{
     --bs-gutter-x: 0 !important;
 }
 
+/* FONT STYLES */
+.completed-task{
+    text-decoration-line: line-through;
+    font-style: italic;
+}
 
 /* FONT WEIGHTS */
 .light{
