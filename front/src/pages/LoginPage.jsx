@@ -6,6 +6,7 @@ import Button from "../components/Button";
 import { getUserInfo, signIn } from "../firebase/auth";
 import { getUserToDos } from "../firebase/db";
 import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 
 
 function LoginPage(){
@@ -22,9 +23,8 @@ function LoginPage(){
 
 
 
-    async function submit(){
+    async function submit(e){
         const result = await signIn(email, pswd).then(v => v);
-        
         //if false show error message
         //if true show spinner
         setIsSubmitted(result);
@@ -59,7 +59,7 @@ function LoginPage(){
                         {!isSubmitted && <p>Ooops... It seems like your info invalid.</p>}
 
                         {!showLoader && <Button color="black" size="medium" label="LOGIN" action={submit}/>}
-                        {showLoader && <CircularProgress />}
+                        {showLoader && <Loader />}
                     </Box>  
 
                     <div className="col-12 col-sm-1 col-md-3 col-lg-4 col-xxl-5"></div>
