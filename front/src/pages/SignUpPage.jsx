@@ -124,7 +124,7 @@ function SignUpPage(){
                             />
                         </div>
                         <div className="row gutter-x-0">
-                            <Button label={"DONE!"} color={"green"} size="large" classes={"col-12 col-sm-6 col-md-3 mx-auto mt-5 bolder"} action = {() => handleSubmit()} />
+                            <Button label={"DONE!"} color={"green"} size="large" classes={"col-12 col-sm-6 col-md-3 mx-auto mt-5 bolder"} action = {handleSubmit} />
                         </div>
                     </div>
                     
