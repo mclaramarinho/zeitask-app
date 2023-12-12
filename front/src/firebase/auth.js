@@ -1,22 +1,27 @@
-import { browserSessionPersistence, getAdditionalUserInfo, getAuth, signInWithCustomToken, signInWithEmailAndPassword} from "firebase/auth";
+import { browserSessionPersistence, getAdditionalUserInfo, getAuth, setPersistence, signInWithCustomToken, signInWithEmailAndPassword} from "firebase/auth";
 import { app, auth } from "./setup";
 import { getLoginCookies, setLoginCookies } from "../utils/loginCookies";
 
 async function signIn (email, password){
-    const result = await new Promise((resolve, reject) => {
-        resolve(signInWithEmailAndPassword(auth, email,password)
-            .then((userCredential) => {
 
-                //returns user uid - but can return anything needed
-                const user = userCredential.user;
-                
-                return(user);
+    const result = await new Promise((resolve, reject) => {
+        setPersistence(auth, browserSessionPersistence)
+        .then(async () => {
+            
+            signInWithEmailAndPassword(auth, email, password)
+            .then((userCred) => {
+                const user = userCred.user;
+                resolve(user);
             })
-            .catch((error) => {
-                return "INVALID CREDENTIALS";
-            }))
+            .catch(err =>{
+                resolve("INVALID CREDENTIALS");
+            })
+        }).catch(err => {
+            resolve("AN ERROR OCCURRED")
+        })
     })
-    result !== "INVALID CREDENTIALS" && setLoginCookies({idToken: result.getIdTokenResult(), uid: result.uid})
+    // const idToken = result.getIdTokenResult();
+    // result !== "INVALID CREDENTIALS" && setLoginCookies({idToken: idToken, uid: result.uid})
     
     //returns true if authenticated and false if not authenticated
     return (result!=="INVALID CREDENTIALS")
