@@ -3,15 +3,26 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 function NavBar(){
     const [anchorEl, setAnchorEl] = useState(null);
-
+    const navigate = useNavigate();
+    const {id} = useParams();
     function handleMenu(e){
         setAnchorEl(e.currentTarget)
     }
+    function goToProfile(){
+        navigate(`/dashboard/${id}/profile`);
+    }
+    function goToToDoList(){
+        navigate(`/dashboard/${id}/todo`);
+    }
+    function goToKanban(){
+        navigate(`/dashboard/${id}/kanban`);
+    }
     function handleClose(){
-        setAnchorEl(null)
+        setAnchorEl(null);
     }
     return (
             <AppBar sx={{backgroundColor: "black", width:"100vw", marginLeft:"0"}} position="static">
@@ -29,9 +40,9 @@ function NavBar(){
                                 anchorOrigin={{vertical: 'top', horizontal:'right'}}
                                 variant="menu"
                         >
-                            <MenuItem onClick={() => handleClose()}>Kanban</MenuItem>
-                            <MenuItem onClick={() => handleClose()}>To Do List</MenuItem>
-                            <MenuItem onClick={() => handleClose()}>Profile</MenuItem>
+                            <MenuItem onClick={() => {handleClose(); goToKanban()}}>Kanban</MenuItem>
+                            <MenuItem onClick={() => {handleClose(); goToToDoList()}}>To Do List</MenuItem>
+                            <MenuItem defaultValue={"profile"} onClick={() => {handleClose(); goToProfile()}}>Profile</MenuItem>
                             <MenuItem onClick={() => handleClose()} sx={{color: "crimson"}}>Log out</MenuItem>
                         </Menu>
 
