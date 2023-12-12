@@ -19,7 +19,7 @@ function Button(props){
     let color;
     let size;
     const classes = props.classes || "";
-
+    const value = props.value || "";
     switch(props.color){
         
         case 'light':
@@ -64,7 +64,7 @@ function Button(props){
     }else if(action !== undefined){
         //button with function execution
         return (
-            <button className={`btn ${color} ${size} ${classes}`} onClick={(e) => e.preventDefault()} onMouseUp={() => {action()}}>{label}</button>     
+            <button value={value} className={`btn ${color} ${size} ${classes}`} onClick={(e) => e.preventDefault()} onMouseUp={(e) => {action(e)}}>{label}</button>     
         )
     }
 }
