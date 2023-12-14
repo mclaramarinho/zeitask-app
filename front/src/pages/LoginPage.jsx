@@ -3,10 +3,10 @@ import LogoHeader from "../components/LogoHeader";
 import { Box, CircularProgress } from "@mui/material";
 import {TextField} from "@mui/material";
 import Button from "../components/Button";
-import { getUserInfo, signIn } from "../firebase/auth";
-import { getUserToDos } from "../firebase/db";
+import { getUserInfo, isUserSignedIn, signIn, whoIsSignedIn } from "../firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
+import { preventLogout } from "../utils/preventLogout";
 
 
 function LoginPage(){
@@ -14,14 +14,12 @@ function LoginPage(){
     const [pswd, setPswd] = useState();
     const [isSubmitted, setIsSubmitted] = useState(true);
     const [showLoader, setShowLoader] = useState(false);
-    
+    const [isSignedIn, setIsSignedIn] = useState(false)
     const navigate = useNavigate();
 
     useEffect(() =>{
-        
-    })
-
-
+        preventLogout('login', setIsSignedIn).then(r => navigate(r))
+    }, [])
 
     async function submit(e){
         const result = await signIn(email, pswd).then(v => v);
@@ -30,10 +28,8 @@ function LoginPage(){
         setIsSubmitted(result);
         setShowLoader(result)
         if(result){
-            const username = getUserInfo()
-            getUserToDos(username).then(v => {
-                navigate(`/dashboard/${username}`)            
-            })
+            const username = getUserInfo();
+            navigate(`/dashboard/${username}`)
         }
     }
 
