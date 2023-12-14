@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import Button from "../components/Button";
-import { getUserToDos, changeToDoStatus } from "../firebase/db";
+import { getUserToDos, changeToDoStatus } from "../firebase/db/todos";
 import notDone from '../assets/not-done.jpg'
 import { Checkbox, FormControlLabel } from "@mui/material";
 import Loader from "../components/Loader";
+import {isUserSignedIn}  from "../firebase/auth";
+import { preventLogout } from "../utils/preventLogout";
+
+
 function Dashboard(){
     const {id} = useParams();
 
@@ -15,7 +19,23 @@ function Dashboard(){
     const [doneItems, setDoneItems] = useState([]);
     const [pendingItems, setPendingItems] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
-  
+
+    
+    const navigate = useNavigate();
+    
+
+    useEffect(() =>{
+        preventLogout('dashboard').then(r => navigate(r))
+        getUserToDos(id).then(r => setTodoList(r))
+        
+    }, [])
+
+    useEffect(() => {
+        categorizeToDoItems()
+    }, [todoList])
+    
+    
+
     function handleBtn(e){
         const value = e.target.value;
         if(value === "overview"){
@@ -26,13 +46,6 @@ function Dashboard(){
             setToDoS(true);
         }
     }
-
-    useEffect(() =>{
-        handleUpdate()
-    }, [])
-    useEffect(() => {
-        categorizeToDoItems()
-    }, [todoList])
 
     async function categorizeToDoItems(){
         setPendingItems(todoList.filter(item => item.status === false));
@@ -57,7 +70,7 @@ function Dashboard(){
                 setTodoList([])
             })
     }
-
+    if(isUserSignedIn()){
     return (
         <div className="container-fluid p-0">
             <NavBar/>
@@ -118,7 +131,7 @@ function Dashboard(){
                 </div>
             </div>
         </div>
-    )
+    )}
 }
 
 export default Dashboard;
