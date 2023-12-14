@@ -1,5 +1,4 @@
 import { isUserSignedIn, whoIsSignedIn } from "../firebase/auth"
-import Navigate from "./navigate"
 
 async function preventLogout(whereAt, setIsSignedIn){
 
