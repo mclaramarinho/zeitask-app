@@ -1,10 +1,11 @@
-import { browserSessionPersistence, getAdditionalUserInfo, getAuth, setPersistence, signInWithCustomToken, signInWithEmailAndPassword} from "firebase/auth";
+import { browserSessionPersistence, getAdditionalUserInfo, getAuth, onAuthStateChanged, setPersistence, signInWithCustomToken, signInWithEmailAndPassword, updateCurrentUser} from "firebase/auth";
 import { app, auth } from "./setup";
 import { getLoginCookies, setLoginCookies } from "../utils/loginCookies";
 
 async function signIn (email, password){
 
     const result = await new Promise((resolve, reject) => {
+        
         setPersistence(auth, browserSessionPersistence)
         .then(async () => {
             
@@ -20,15 +21,37 @@ async function signIn (email, password){
             resolve("AN ERROR OCCURRED")
         })
     })
-    // const idToken = result.getIdTokenResult();
-    // result !== "INVALID CREDENTIALS" && setLoginCookies({idToken: idToken, uid: result.uid})
     
-    //returns true if authenticated and false if not authenticated
-    return (result!=="INVALID CREDENTIALS")
+    return (result!=="INVALID CREDENTIALS" && (result!=="AN ERROR OCCURRED"))
+}
+
+// checks if theres an user signed in 
+async function isUserSignedIn(){
+    return new Promise((resolve, reject) => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                resolve(true)
+            } else {
+                resolve(false)
+            }
+        });
+    })
+}
+
+async function whoIsSignedIn(){
+    return new Promise((resolve, reject) => {
+        onAuthStateChanged(auth, (user) => {
+            if(user){
+                resolve(user.displayName)
+            }else{
+                resolve("NO USER SIGNED IN")
+            }
+        });
+    })
 }
 
 
-function getUserInfo(credentials){
+function getUserInfo(uid){
     const user = auth.currentUser;
     if(user !== null){
         const displayName = user.displayName;
@@ -40,4 +63,4 @@ function getUserInfo(credentials){
 
 
 
-export {signIn, getUserInfo};
+export {signIn, getUserInfo, isUserSignedIn, whoIsSignedIn};
