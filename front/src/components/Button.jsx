@@ -44,7 +44,7 @@ function Button(props){
             size = "btn-md";
             break;
         case 'small':
-            size = "btn-md";
+            size = "btn-sm";
             break;
         default:
             size = "btn-md";
