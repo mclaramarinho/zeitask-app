@@ -8,6 +8,7 @@ import { Checkbox, FormControlLabel } from "@mui/material";
 import Loader from "../components/Loader";
 import {isUserSignedIn}  from "../firebase/auth";
 import { preventLogout } from "../utils/preventLogout";
+import dayjs from "dayjs";
 
 
 function Dashboard(){
@@ -70,6 +71,18 @@ function Dashboard(){
                 setTodoList([])
             })
     }
+
+    function tasksThisWeek(){
+        let count = 0;
+        doneItems.map(item => {
+            if(dayjs().diff(dayjs(item.completed).toDate(), 'day') <= 7){
+                count++;
+            }
+        })
+        return count;
+    }
+
+
     if(isUserSignedIn()){
     return (
         <div className="container-fluid p-0">
@@ -106,7 +119,7 @@ function Dashboard(){
                                         
                                         <div className="row gutter-x-0 text-center">
                                             <img src={notDone} alt="" className="w-25 m-auto"/>
-                                            <h4>You completed X tasks this week</h4>
+                                            <h4>You completed {tasksThisWeek()} tasks this week</h4>
                                         </div>
                                     </div>
                                 }
