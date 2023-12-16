@@ -10,9 +10,8 @@ async function checkEmailAvailability(email){
         const snapshot = await get(actualRef);
         let res = true;
         snapshot.forEach(item => {
-            if(item.val().email === email){
+            if(item.val()['email'] === email){
                 res = false;
-                return;    
             }
         })
         return res;
@@ -27,7 +26,7 @@ async function checkUsernameAvailability(username){
         const snapshot = await get(actualRef);
         let res = true;
         snapshot.forEach(item => {
-            if(item.key === username){
+            if(item.val()['username'] === username){
                 res = false;
                 return;
             }
@@ -38,4 +37,14 @@ async function checkUsernameAvailability(username){
     }
 }
 
-export {checkEmailAvailability, checkUsernameAvailability}
+async function createNewUser(email, username, terms){
+    const actualRef = ref(db, `users/${username}`);
+    set(actualRef, {
+        email: email,
+        username: username,
+        termsAccepted: terms
+    })
+
+}
+
+export {checkEmailAvailability, checkUsernameAvailability, createNewUser}
