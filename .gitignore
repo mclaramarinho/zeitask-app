@@ -4,6 +4,5 @@
 
 # production
 /build
-firebase.config.js
 node_modules
 .env
