@@ -22,6 +22,7 @@ function handlePath(whereAt, id){
     let response = "";
     switch(whereAt){
         case 'login':
+        case 'signup':
         case 'dashboard':
             response = `/dashboard/${id}`;
             break;
