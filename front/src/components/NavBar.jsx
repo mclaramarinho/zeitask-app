@@ -4,6 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { signUserOut } from "../firebase/auth";
 
 function NavBar(){
     const [anchorEl, setAnchorEl] = useState(null);
@@ -24,6 +25,7 @@ function NavBar(){
     function handleClose(){
         setAnchorEl(null);
     }
+    
     return (
             <AppBar sx={{backgroundColor: "black", width:"100vw", marginLeft:"0"}} position="static">
                 <Toolbar>
@@ -39,11 +41,12 @@ function NavBar(){
                                 keepMounted
                                 anchorOrigin={{vertical: 'top', horizontal:'right'}}
                                 variant="menu"
+                                anchorEl={anchorEl}
                         >
                             <MenuItem onClick={() => {handleClose(); goToKanban()}}>Kanban</MenuItem>
                             <MenuItem onClick={() => {handleClose(); goToToDoList()}}>To Do List</MenuItem>
                             <MenuItem defaultValue={"profile"} onClick={() => {handleClose(); goToProfile()}}>Profile</MenuItem>
-                            <MenuItem onClick={() => handleClose()} sx={{color: "crimson"}}>Log out</MenuItem>
+                            <MenuItem onClick={() => {handleClose(); signUserOut() && navigate('/login')}} sx={{color: "crimson"}}>Log out</MenuItem>
                         </Menu>
 
                         
