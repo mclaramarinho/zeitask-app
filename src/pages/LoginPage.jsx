@@ -3,7 +3,7 @@ import LogoHeader from "../components/LogoHeader";
 import { Box, CircularProgress } from "@mui/material";
 import {TextField} from "@mui/material";
 import Button from "../components/Button";
-import { getUserInfo, isUserSignedIn, signIn, whoIsSignedIn } from "../firebase/auth";
+import { getUsername, isUserSignedIn, signIn, whoIsSignedIn } from "../firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 import { preventLogout } from "../utils/preventLogout";
@@ -28,7 +28,7 @@ function LoginPage(){
         setIsSubmitted(result);
         setShowLoader(result)
         if(result){
-            const username = getUserInfo();
+            const username = getUsername();
             navigate(`/dashboard/${username}`)
         }
     }
