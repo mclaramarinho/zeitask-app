@@ -1,0 +1,8 @@
+.completed-task{
+    text-decoration-line: line-through;
+    font-style: italic;
+}
+.error-msg{
+    font-size: 12px;
+    text-align: justify;
+}
