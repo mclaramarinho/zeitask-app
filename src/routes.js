@@ -5,6 +5,7 @@ import SignUpPage from './pages/SignUpPage';
 import Dashboard from './pages/Dashboard';
 import ToDoPage from './pages/ToDoPage';
 import KanbanPage from './pages/KanbanPage';
+import ProfilePage from './pages/ProfilePage';
 
 const routes = createBrowserRouter([
     {
@@ -32,6 +33,7 @@ const routes = createBrowserRouter([
     {
         path: '/dashboard/:id/profile',
         //go to profile page
+        element: <ProfilePage />
     },
     {
         path: '/dashboard/:id/todo',
