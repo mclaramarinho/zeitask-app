@@ -1,0 +1,16 @@
+@media (max-width: 764px) {
+    .hide-mobile{
+        display: none !important;
+    }
+    .hide-medium{
+        display: inline-block !important;
+    }
+}
+@media (min-width: 764px) {
+    .hide-mobile{
+        display: inline-block !important;
+    }
+    .hide-medium{
+        display: none !important;
+    }
+}
