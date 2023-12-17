@@ -10,7 +10,6 @@ async function preventLogout(whereAt, setIsSignedIn){
                     resolve(handlePath(whereAt, res))    
                 })
             }else{
-                console.log(r)
                 setIsSignedIn && setIsSignedIn(false);
                 resolve('/login')
             }
