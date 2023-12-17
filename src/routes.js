@@ -41,7 +41,7 @@ const routes = createBrowserRouter([
     {
         path: '/dashboard/:id/kanban',
         //go to kanban page
-        element: <KanbanPage />
+        // element: <KanbanPage />
     }
 ])
 
