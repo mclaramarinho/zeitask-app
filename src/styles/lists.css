@@ -1,0 +1,15 @@
+/* LIST MARKERS */
+.v-mark{
+    color: green;
+    font-weight: 500;
+}
+.v-mark::marker{
+    content: "✓";
+    }
+.x-mark{
+    color: crimson;
+    font-weight: 400;
+}
+.x-mark::marker{
+    content: '✗';
+}
