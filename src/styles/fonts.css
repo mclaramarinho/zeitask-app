@@ -1,0 +1,29 @@
+/* FONT WEIGHTS */
+.light{
+    font-weight: lighter !important;
+}
+.normal{
+    font-weight: 400 !important;
+}
+.bolder{
+    font-weight: 700;
+}
+.black{
+    font-weight: 900 !important;
+}
+
+/* FONT SIZES */
+.f-13{
+    font-size: 13px !important;
+}
+.f-12{
+    font-size: 12px !important;
+}
+.f-10{
+    font-size: 10px !important;
+}
+
+/* FONT COLOR */
+.color-black{
+    color: black !important;
+}
