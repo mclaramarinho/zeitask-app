@@ -8,6 +8,7 @@ import '../src/styles/fontTemplate.css';
 import '../src/styles/lists.css';
 import '../src/styles/responsivity.css';
 import '../src/styles/sizing.css';
+import '../src/styles/cursor.css';
 import { RouterProvider } from 'react-router-dom';
 import routes from './routes';
 
