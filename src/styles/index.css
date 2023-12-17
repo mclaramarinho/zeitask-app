@@ -4,3 +4,11 @@ body{
     position: absolute;
     font-family: 'Montserrat' ;
 }
+
+.outline-black{
+    outline: 1px solid black;
+}
+
+.shadow{
+    box-shadow: 6px 6px 15px 20px;
+}
