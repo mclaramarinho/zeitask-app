@@ -75,7 +75,6 @@ function ToDoPage(){
 
     function handleEditMode(){
         if(editMode){
-            console.log("ended editing")
             //update item in the database
             updateToDoItem(itemDetails)
         }
