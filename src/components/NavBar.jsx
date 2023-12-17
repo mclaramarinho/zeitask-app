@@ -29,7 +29,7 @@ function NavBar(){
     return (
             <AppBar sx={{backgroundColor: "black", width:"100vw", marginLeft:"0"}} position="static">
                 <Toolbar>
-                    <Typography variant="h5" letterSpacing={10} fontFamily={"inherit"}>ZEITASK</Typography>
+                    <Typography className="pointer-cursor" variant="h5" letterSpacing={10} fontFamily={"inherit"} onClick={() => navigate(`/dashboard/${id}`)}>ZEITASK</Typography>
                     
                     <div className="position-absolute end-0 mx-4">
                         <IconButton size="large" edge="end" onClick={(e) => handleMenu(e)}>
