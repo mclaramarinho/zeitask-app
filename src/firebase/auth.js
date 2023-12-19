@@ -1,6 +1,5 @@
-import { browserLocalPersistence, onAuthStateChanged, setPersistence, signInWithEmailAndPassword, signOut, Auth, createUserWithEmailAndPassword, signInWithCredential, updateCurrentUser, updateProfile, updatePassword, sendEmailVerification} from "firebase/auth";
+import { browserLocalPersistence, onAuthStateChanged, setPersistence, signInWithEmailAndPassword, signOut, Auth, createUserWithEmailAndPassword, signInWithCredential, updateCurrentUser, updateProfile, updatePassword, sendEmailVerification, updateEmail, verifyBeforeUpdateEmail, signInWithCustomToken} from "firebase/auth";
 import { app, auth } from "./setup";
-import { getLoginCookies, setLoginCookies } from "../utils/loginCookies";
 import { createNewUser } from "./db/user";
 
 
@@ -40,17 +39,19 @@ async function signIn (email, password){
         })
     })
 
-    const ls = Object.keys(localStorage);
-    let persistenceLS = "";
-    ls.forEach(item => {
-        if(item.includes('DEFAULT')){
-            persistenceLS = item;
-        }
-    })
-    let currentData = JSON.parse(localStorage.getItem(persistenceLS));
-    currentData.apiKey = null;
+    if(result !== "INVALID CREDENTIALS" && result !== "AN ERROR OCCURRED"){
+        const ls = Object.keys(localStorage);
+        let persistenceLS = "";
+        ls.forEach(item => {
+            if(item.includes('DEFAULT')){
+                persistenceLS = item;
+            }
+        })
+        let currentData = JSON.parse(localStorage.getItem(persistenceLS));
+        currentData.apiKey = null;
 
-    localStorage.setItem(persistenceLS, JSON.stringify(currentData))
+        localStorage.setItem(persistenceLS, JSON.stringify(currentData))
+    }
     
     return (result!=="INVALID CREDENTIALS" && (result!=="AN ERROR OCCURRED"))
 }
@@ -128,13 +129,14 @@ function isEmailConfirmed(){
 //unfinished
 async function changePassword(newPassword){
     const user = await whoIsSignedIn("user");
-    return updatePassword(user, newPassword).then(() => {
-        return true;
+    return new Promise((res, rej) =>{{
+        updatePassword(user, newPassword).then(() => {
+            res (true);
+        })
+        .catch((err) => {
+            res (false)
+        })}
     })
-    .catch((err) => {
-        return false
-    })
-    // updateCurrentUser(auth, user)
 }
 
 async function sendVerification(){
@@ -142,9 +144,24 @@ async function sendVerification(){
     return sendEmailVerification(user).then(() => true).catch(err => false)
 }
 
-async function changeEmail(newEmail){
-    
+ async function changeEmail(newEmail){
+    return new Promise((resolve, reject) => {
+        onAuthStateChanged(auth, async (user) => {
+            if(user){
+                try{
+                    await verifyBeforeUpdateEmail(user, newEmail)
+                    resolve(true);
+                }catch(error){
+                    console.log(error)
+                    reject(false);
+                }
+            }else{
+                reject(false);
+            }
+        
+        })
+    })
 }
 
 
-export {signIn, getUsername, isUserSignedIn, whoIsSignedIn, signUserOut, signUp, getEmail, isEmailConfirmed, changePassword, sendVerification};
+export {signIn, getUsername, isUserSignedIn, whoIsSignedIn, signUserOut, signUp, getEmail, isEmailConfirmed, changePassword, sendVerification, changeEmail};
