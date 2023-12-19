@@ -1,6 +1,6 @@
 import { browserLocalPersistence, onAuthStateChanged, setPersistence, signInWithEmailAndPassword, signOut, Auth, createUserWithEmailAndPassword, signInWithCredential, updateCurrentUser, updateProfile, updatePassword, sendEmailVerification, updateEmail, verifyBeforeUpdateEmail, signInWithCustomToken} from "firebase/auth";
-import { app, auth } from "./setup";
-import { createNewUser } from "./db/user";
+import { app, auth, db } from "./setup";
+import { createNewUser, getUserDBInfo, updateUserDatabase } from "./db/user";
 
 
 async function signUp(email, password, terms, username){
@@ -28,7 +28,17 @@ async function signIn (email, password){
         .then(async () => {
             
             signInWithEmailAndPassword(auth, email, password)
-            .then((userCred) => {
+            .then(async (userCred) => {
+                const dbData = await getUserDBInfo(userCred.user);
+                const dbEmail = dbData.email;
+                const dbUsername = dbData.username;
+
+                if(userCred.user.email !== dbEmail){
+                    await updateUserDatabase('email', userCred.user.email)
+                }
+                if(userCred.user.displayName !== dbUsername){
+                    await updateUserDatabase('username', userCred.user.displayName)
+                }
                 resolve();
             })
             .catch(err =>{
@@ -51,6 +61,8 @@ async function signIn (email, password){
         currentData.apiKey = null;
 
         localStorage.setItem(persistenceLS, JSON.stringify(currentData))
+
+
     }
     
     return (result!=="INVALID CREDENTIALS" && (result!=="AN ERROR OCCURRED"))
