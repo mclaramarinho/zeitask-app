@@ -5,7 +5,8 @@ import dayjs from "dayjs";
 
 
 // retrieve user todo cards' content
-async function getUserToDos(username){
+async function getUserToDos(){
+    const username = await whoIsSignedIn("username")
     const actualRef = ref(db, `users/${username}/todo-cards`);
     try{
         const snapshot = await get(actualRef);
