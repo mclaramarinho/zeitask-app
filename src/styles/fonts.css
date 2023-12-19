@@ -30,3 +30,8 @@
 .color-white{
     color: white !important;
 }
+
+/* FONT DECORATION */
+.no-decoration{
+    text-decoration: none !important;
+}
