@@ -1,9 +1,9 @@
 import { useTheme } from '@mui/material/styles';
-import { Dialog, DialogTitle, Snackbar, Switch, TextField, Typography, useMediaQuery } from "@mui/material";
+import { AppBar, Dialog, DialogTitle, IconButton, Snackbar, Switch, TextField, Typography, useMediaQuery } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Button from './Button';
 import { createToDoItem } from '../firebase/db/todos';
-
+import { Close } from '@mui/icons-material';
 function CreateToDoItem(props){
     const openCreateDialog = props.openCreateDialog;
     const setOpenCreateDialog = props.setOpenCreateDialog;
@@ -37,8 +37,18 @@ function CreateToDoItem(props){
             </div>
         }
         {!wasCreated &&
-            <div>
-                <DialogTitle>Create New To Do Item</DialogTitle>
+            <div className=''>
+
+                <div className='container px-4 py-4'>
+                    <div className='row align-items-center p-1'>
+                        <DialogTitle className='col-11 p-0' fontWeight={600}>CREATE NEW TO DO</DialogTitle>
+                        <IconButton onMouseUp={() => setOpenCreateDialog(false)} className='col-1 h-100 p-0'>
+                            <Close />
+                        </IconButton>
+                    </div>
+                    
+                </div>
+                
                 <div className='container p-4'>
                     <div className='row gutter-x-0'>
                         <label htmlFor="title-field">Title</label>
@@ -49,7 +59,7 @@ function CreateToDoItem(props){
                     </div>
                     <div className='row mt-5 gutter-x-0'>
                         <label htmlFor="desc-field">Description</label>
-                        <textarea name='desc-field' rows={5} className='p-3' placeholder='Your to do item description...' 
+                        <textarea name='desc-field' rows={5} className='p-3 mt-1' placeholder='Your to do item description...' 
                                 onChange={(e) => setItemDetails(prev => {return {...prev, description: e.target.value}})}
                         />
                     </div>
