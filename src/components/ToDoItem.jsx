@@ -9,12 +9,12 @@ function ToDoItem(props){
 
 
     return (
-        <tr>
+        <tr className="">
             <td className="col-1 text-center">
                 <Checkbox className="m-0" onChange={(e) => handleSelection(e, item.title)} />
             </td>
-            <td>
-                <h5 className={`${props.completed && "completed-task"}`}>{item.title}</h5>
+            <td className="">
+                <h5 className={`${props.completed && "completed-task"} my-auto`}>{item.title}</h5>
             </td>
             <td className="col-1 text-center">
                 <IconButton onMouseUp={() => handleOpenDetails(item)}><NavigateNextOutlined /></IconButton>
