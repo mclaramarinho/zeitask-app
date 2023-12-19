@@ -55,7 +55,8 @@ function LoginPage(){
                         {!isSubmitted && <p>Ooops... It seems like your info invalid.</p>}
 
                         {!showLoader && <Button color="black" size="medium" label="LOGIN" action={submit}/>}
-                        {!showLoader && <a href="/signup" className="row justify-content-center gutter-x-0 color-black mt-3">Create an account!</a> }
+                        {!showLoader && <a href="/signup" className="row justify-content-center gutter-x-0 color-black mt-3 no-decoration">Create an account!</a> }
+                        {!showLoader && <a href="/recover-my-password" className="row justify-content-center gutter-x-0 color-black mt-3 no-decoration">Recover my password</a> }
                         {showLoader && <Loader />}
                     </Box>  
 
