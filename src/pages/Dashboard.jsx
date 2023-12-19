@@ -27,7 +27,7 @@ function Dashboard(){
 
     useEffect(() =>{
         preventLogout('dashboard').then(r => navigate(r))
-        getUserToDos(id).then(r => setTodoList(r))
+        getUserToDos().then(r => setTodoList(r))
         
     }, [])
 
