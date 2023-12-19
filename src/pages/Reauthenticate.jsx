@@ -40,7 +40,8 @@ function Reauthenticate(){
         <div className="container-fluid">
             <LogoHeader />
             <section className="p-md-5 text-center">
-                <h2 className="mb-5">LOGIN</h2>
+                <h2 className="mb-5">REAUTHENTICATE</h2>
+                <p>Let's confirm who you are before making any changes</p>
                 <div className="row">
                     <div className="col-12 col-sm-1 col-md-3 col-lg-4 col-xxl-5"></div>
 
