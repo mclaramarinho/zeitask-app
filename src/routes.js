@@ -7,6 +7,7 @@ import ToDoPage from './pages/ToDoPage';
 import KanbanPage from './pages/KanbanPage';
 import ProfilePage from './pages/ProfilePage';
 import Reauthenticate from './pages/Reauthenticate';
+import RecoverPswd from './pages/RecoverPswd';
 
 const routes = createBrowserRouter([
     {
@@ -49,6 +50,10 @@ const routes = createBrowserRouter([
     {
         path: '/reauthenticate/:action',
         element: <Reauthenticate />
+    },
+    {
+        path: "/recover-my-password",
+        element: <RecoverPswd />
     }
 ])
 
