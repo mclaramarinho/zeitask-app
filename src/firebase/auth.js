@@ -1,4 +1,4 @@
-import { browserLocalPersistence, onAuthStateChanged, setPersistence, signInWithEmailAndPassword, signOut, Auth, createUserWithEmailAndPassword, signInWithCredential, updateCurrentUser, updateProfile, updatePassword, sendEmailVerification, updateEmail, verifyBeforeUpdateEmail, signInWithCustomToken} from "firebase/auth";
+import { browserLocalPersistence, onAuthStateChanged, setPersistence, signInWithEmailAndPassword, signOut, Auth, createUserWithEmailAndPassword, signInWithCredential, updateCurrentUser, updateProfile, updatePassword, sendEmailVerification, updateEmail, verifyBeforeUpdateEmail, signInWithCustomToken, sendPasswordResetEmail} from "firebase/auth";
 import { app, auth, db } from "./setup";
 import { createNewUser, getUserDBInfo, updateUserDatabase } from "./db/user";
 
@@ -151,6 +151,17 @@ async function changePassword(newPassword){
     })
 }
 
+async function sendRecoveryLink(email){
+    return new Promise((res, rej) => {
+        sendPasswordResetEmail(auth, email).then(() => {
+            res(true)
+        }).catch(err => {
+            rej(false)
+        })
+    })
+}
+
+
 async function sendVerification(){
     const user = await whoIsSignedIn("user");
     return sendEmailVerification(user).then(() => true).catch(err => false)
@@ -176,4 +187,4 @@ async function sendVerification(){
 }
 
 
-export {signIn, getUsername, isUserSignedIn, whoIsSignedIn, signUserOut, signUp, getEmail, isEmailConfirmed, changePassword, sendVerification, changeEmail};
+export {signIn, getUsername, isUserSignedIn, whoIsSignedIn, signUserOut, signUp, getEmail, isEmailConfirmed, changePassword, sendVerification, changeEmail, sendRecoveryLink};
