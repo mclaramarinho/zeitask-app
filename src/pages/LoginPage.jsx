@@ -28,8 +28,8 @@ function LoginPage(){
         setIsSubmitted(result);
         setShowLoader(result)
         if(result){
-            const username = getUsername();
-            navigate(`/dashboard/${username}`)
+            getUsername().then(r => navigate(`/dashboard/${r}`));
+            
         }
     }
 
