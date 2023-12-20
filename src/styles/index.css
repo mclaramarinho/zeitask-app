@@ -12,3 +12,52 @@ body{
 .shadow{
     box-shadow: 6px 6px 15px 20px;
 }
+
+.border-2{
+    border-radius: 2vw;
+}
+
+.overflow-clip{
+    overflow: clip !important;
+}
+
+.overflow-y-scroll{
+    overflow-y: scroll !important;
+    
+}
+.overflow-y-scroll::-webkit-scrollbar{
+    display: none;
+}
+
+
+@media (max-width: 767px) {
+    .dashboard-img{
+        margin-left: 0;
+        width: 35% !important;
+        height: 35% !important;
+    }
+    .dashboard-container{
+        position: inherit;
+        height: 80vh;
+    }
+}
+
+@media (min-width: 767px) {
+    .dashboard-img{
+        margin: 0 auto;
+        width: 40%;
+        height: 40%;
+    }
+    .dashboard-container{
+        height: 70vh;
+    }
+}
+
+.badge-text{
+    /* font-style: oblique !important; */
+    font-variant: small-caps;
+    font-family: fantasy monospace;
+    font-weight: 700;
+    font-size: 30px;
+    
+}
