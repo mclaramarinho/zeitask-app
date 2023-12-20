@@ -8,6 +8,7 @@ import KanbanPage from './pages/KanbanPage';
 import ProfilePage from './pages/ProfilePage';
 import Reauthenticate from './pages/Reauthenticate';
 import RecoverPswd from './pages/RecoverPswd';
+import NewDashboard from './pages/NewDashboard';
 
 const routes = createBrowserRouter([
     {
@@ -30,7 +31,8 @@ const routes = createBrowserRouter([
         path: '/dashboard/:id',
         //go to dashboard page
         //id = displayName of firebase auth info
-        element: <Dashboard />
+        // element: <Dashboard />
+        element: <NewDashboard />
     },
     {
         path: '/dashboard/:id/profile',
