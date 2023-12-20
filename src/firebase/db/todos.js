@@ -48,7 +48,6 @@ async function changeToDoStatus(title, newStatus){
         updates[ `users/${username}/todo-cards/${cardToUpdate}/completed`] = "";
     }
     return update(ref(db), updates)
-
 }
 
 async function updateToDoItem(toDoItem){
