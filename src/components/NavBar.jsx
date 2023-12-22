@@ -49,7 +49,7 @@ function NavBar(){
                             <MenuItem onClick={() => {handleClose(); goToToDoList()}}>To Do List</MenuItem>
                             <MenuItem onClick={() => {handleClose(); goToNotes()}}>Notes</MenuItem>
                             <MenuItem defaultValue={"profile"} onClick={() => {handleClose(); goToProfile()}}>Profile</MenuItem>
-                            <MenuItem onClick={() => {handleClose(); signUserOut() && navigate('/login')}} sx={{color: "crimson"}}>Log out</MenuItem>
+                            <MenuItem onClick={() => {handleClose(); signUserOut().then(r => {console.log(r); r && navigate('/login')})}} sx={{color: "crimson"}}>Log out</MenuItem>
                         </Menu>
 
                         
