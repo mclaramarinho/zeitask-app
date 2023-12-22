@@ -47,7 +47,7 @@ function NotesPage() {
             <div className="container position-fixed top-50 start-50 translate-middle h-75 shadow border-2 overflow-clip p-4" >
                     
                     <div className="row">
-                        <div className="row">
+                        <div className="row gutter-x-0">
                             <div className="col-md-3"></div>
                             <div className="col-12 m-auto col-md-6">
                                 <Paper className="d-flex justify-items-center">
@@ -60,7 +60,7 @@ function NotesPage() {
                         </div>
                         
 
-                        <div className="row py-4">
+                        <div className="row py-4 m-auto">
                             {
                                 notes.map(item => {
                                     const noteValues = item[1];
