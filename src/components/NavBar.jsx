@@ -25,7 +25,9 @@ function NavBar(){
     function handleClose(){
         setAnchorEl(null);
     }
-    
+    function goToNotes(){
+        navigate(`/dashboard/${id}/notes`);
+    }
     return (
             <AppBar  sx={{backgroundColor: "black", width:"100vw", marginLeft:"0"}} position="static">
                 <Toolbar>
@@ -45,6 +47,7 @@ function NavBar(){
                         >
                             {/* <MenuItem onClick={() => {handleClose(); goToKanban()}}>Kanban</MenuItem> */}
                             <MenuItem onClick={() => {handleClose(); goToToDoList()}}>To Do List</MenuItem>
+                            <MenuItem onClick={() => {handleClose(); goToNotes()}}>Notes</MenuItem>
                             <MenuItem defaultValue={"profile"} onClick={() => {handleClose(); goToProfile()}}>Profile</MenuItem>
                             <MenuItem onClick={() => {handleClose(); signUserOut() && navigate('/login')}} sx={{color: "crimson"}}>Log out</MenuItem>
                         </Menu>
