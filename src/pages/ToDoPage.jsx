@@ -270,12 +270,11 @@ function ToDoPage(){
                 
                 <CreateToDoItem openCreateDialog={openCreateDialog} setOpenCreateDialog={setOpenCreateDialog} />
                 
-                {/* list of to do items */}
 
-                
+                <Fab onMouseUp={( ) => setOpenCreateDialog(true)} sx={{backgroundColor: "black", color: "white", position:"fixed", bottom: "4vh", right: "4vw"}}><AddTaskOutlined /></Fab>
+
             </div>
             <CreateToDoTag openCreateDialog={isCreatingTag} setOpenCreateDialog={setIsCreatingTag} />
-            <Fab onMouseUp={( ) => setOpenCreateDialog(true)} sx={{backgroundColor: "black", color: "white", position:"fixed", bottom: "4vh", right: "4vw"}}><AddTaskOutlined /></Fab>
         </div>
     )
 }
