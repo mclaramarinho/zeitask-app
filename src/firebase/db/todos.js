@@ -34,6 +34,17 @@ async function createUserToDoTag(tag){
     }
 }
 
+async function deleteUserToDoTag(tagName){
+    try{
+        const username = await whoIsSignedIn("username");
+        let actualRef = ref(db, `users/${username}/todo-tags/${tagName}`);
+        remove(actualRef)
+        return true;
+    }catch(error){
+        return false;
+    }
+}
+
 // retrieve user todo cards' content
 async function getUserToDos(){
     const username = await whoIsSignedIn("username")
@@ -134,14 +145,15 @@ async function createToDoItem(item){
             break;
         }
     }
-    
+    const itemTag = item.tag;
     set(ref(db, `users/${username}/todo-cards/${randomID}`), {
         completed: item.status ? dayjs().format("YYYY-DD-MM").toString() : "",
         created: dayjs().format("YYYY-DD-MM").toString(),
         title: item.title,
         description: item.description,
-        status: item.status
+        status: item.status,
+        tag: {[itemTag]: true}
     })
 }
 
-export {getUserToDos, changeToDoStatus, updateToDoItem, deleteToDoItem, createToDoItem, getUserToDoTags, createUserToDoTag}
+export {getUserToDos, changeToDoStatus, updateToDoItem, deleteToDoItem, createToDoItem, getUserToDoTags, createUserToDoTag, deleteUserToDoTag}
