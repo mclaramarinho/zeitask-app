@@ -33,25 +33,28 @@ body{
 @media (max-width: 767px) {
     .dashboard-img{
         margin-left: 0;
-        width: 35% !important;
-        height: 35% !important;
+        width: 25% !important;
+        height: 25% !important;
     }
-    .dashboard-container{
-        position: inherit;
-        height: 80vh;
+    .direction-column-mobile{
+        flex-direction:column !important;
+    }
+    .tags-col{
+        max-height: 10vh !important;
     }
 }
 
 @media (min-width: 767px) {
     .dashboard-img{
         margin: 0 auto;
-        width: 40%;
-        height: 40%;
+        width: 30%;
+        height: 30%;
     }
-    .dashboard-container{
-        height: 70vh;
+    .direction-column-mobile{
+        flex-direction: row !important;
     }
 }
+
 
 .badge-text{
     /* font-style: oblique !important; */
@@ -60,4 +63,11 @@ body{
     font-weight: 700;
     font-size: 30px;
     
+}
+
+
+.direction-column-mobile{
+    flex-wrap: nowrap !important;
+    max-height: 100% !important;
+    min-height: 0 !important;
 }
