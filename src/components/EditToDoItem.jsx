@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IconButton, Switch, TextField, Typography } from "@mui/material";
 import { DeleteOutline, Edit, Save } from "@mui/icons-material"
+import { getUserToDoTags } from "../firebase/db/todos";
 
 function EditToDoItem(props) {
     const handleEditMode = props.handleEditMode;
@@ -10,9 +11,13 @@ function EditToDoItem(props) {
     const updateDescription = props.updateDescription;
     const updateTitle = props.updateTitle;
     const updateStatus = props.updateStatus;
-
+    const updateTag = props.updateTag;
     const handleDeleteItem = props.handleDeleteItem;
 
+    const [tags, setTags] = useState([]);
+    useEffect(() => {
+      getUserToDoTags().then(r => setTags(r))
+    }, [])
   return (
     <div className={`container ${props.mobile && "p-4"}`}>
       <div className="row gutter-x-0">
@@ -64,6 +69,39 @@ function EditToDoItem(props) {
           <Typography variant="caption" className="">
             {itemDetails.status ? "Done" : "Not done yet"}
           </Typography>
+        </div>
+      </div>
+      <div className="row mt-3">
+        <div className="col-12">
+          <Typography
+            variant="button"
+            className="me-5 row"
+            sx={{ fontSize: "16px" }}
+          >
+            ITEM TAG
+          </Typography>
+          <div className="row row-gap-2">
+            {/* item tags available */}
+            {tags.map((tag) =>{
+              let backgroundColor = "";
+              if(itemDetails.tag === tag.tagName){
+                backgroundColor = tag.tagColor.split();
+                backgroundColor[0] += "BF";
+              }
+              return (
+                
+                <div className="col-5 col-md-3 text-center justify-content-center p-0 m-auto">
+                  <button value={tag.tagName} disabled={!editMode}
+                          className="btn btn-sm btn-outline bolder border-box w-100 px-0"
+                          onMouseUp={(e)=> updateTag(e)}
+                          style={{borderColor: tag.tagColor, backgroundColor: backgroundColor}}>
+                            {tag.tagName}
+                  </button>
+                </div>
+              )
+            })}
+          </div>
+          
         </div>
       </div>
     </div>
