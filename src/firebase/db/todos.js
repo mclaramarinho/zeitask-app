@@ -4,6 +4,36 @@ import { whoIsSignedIn } from "../auth";
 import dayjs from "dayjs";
 
 
+async function getUserToDoTags(){
+    const username = await whoIsSignedIn("username");
+
+    let actualRef = ref(db, `users/${username}/todo-tags`);
+    let snapshot = await get(actualRef);
+    let tags = [];
+    //add new field to all users
+    snapshot.forEach(item => {
+        tags.push({
+            tagName: item.val().name,
+            tagColor: item.val().color
+        })
+    })
+    return tags;
+}
+
+async function createUserToDoTag(tag){
+    try{
+        const username = await whoIsSignedIn("username");
+        let actualRef = ref(db, `users/${username}/todo-tags/${tag.tagName}`);
+        set(actualRef, {
+            name: tag.tagName,
+            color: tag.tagColor
+        })
+        return true;
+    }catch(error){
+        return false;
+    }
+}
+
 // retrieve user todo cards' content
 async function getUserToDos(){
     const username = await whoIsSignedIn("username")
@@ -50,6 +80,12 @@ async function changeToDoStatus(title, newStatus){
     return update(ref(db), updates)
 }
 
+
+
+/**
+ * @param toDoItem: {title: string, newTitle: string, description: string, status: boolean, tag: string}
+ * @returns void
+ */
 async function updateToDoItem(toDoItem){
     const username = await whoIsSignedIn();
     let cardToUpdate = await getToDoCardKey(toDoItem.title, username)
@@ -58,6 +94,8 @@ async function updateToDoItem(toDoItem){
     updates[`users/${username}/todo-cards/${cardToUpdate}/title`] = toDoItem.newTitle;
     updates[`users/${username}/todo-cards/${cardToUpdate}/description`] = toDoItem.description;
     updates[`users/${username}/todo-cards/${cardToUpdate}/status`] = toDoItem.status;
+    set(ref(db, `users/${username}/todo-cards/${cardToUpdate}/tag`), {});
+    set(ref(db, `users/${username}/todo-cards/${cardToUpdate}/tag/${toDoItem.tag}`), true);
     if(toDoItem.status){
         updates[`users/${username}/todo-cards/${cardToUpdate}/completed`] = dayjs().format('YYYY-DD-MM').toString();
     }else{
@@ -106,4 +144,4 @@ async function createToDoItem(item){
     })
 }
 
-export {getUserToDos, changeToDoStatus, updateToDoItem, deleteToDoItem, createToDoItem}
+export {getUserToDos, changeToDoStatus, updateToDoItem, deleteToDoItem, createToDoItem, getUserToDoTags, createUserToDoTag}
