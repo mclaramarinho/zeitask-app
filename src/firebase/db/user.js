@@ -42,7 +42,38 @@ async function createNewUser(email, username, terms){
     set(actualRef, {
         email: email,
         username: username,
-        termsAccepted: terms
+        termsAccepted: terms,
+        "todo-tags": {
+            "default": {
+                name: "default",
+                color: "#b7dae2"
+            },
+            "personal": {
+                name: "personal",
+                color: "#006bff"
+            },
+            "work": {
+                name: "work",
+                color: "#00cc35"
+            }
+        },
+        "todo-cards": {
+            "_example_card": {
+                title: "Example Card",
+                description: "This is an example card. You can delete it by clicking the trash icon on the top right corner.",
+                status: "false",
+                created: dayjs().format("MM-DD-YYYY"),
+                completed: "",
+                tag: {default: true}
+            }
+        },
+        "notes": {
+            "note0000001": {
+                title: "example note",
+                content: "this is an example note",
+                date: "12-22-2023"
+            }
+        }
     })
 
 }
