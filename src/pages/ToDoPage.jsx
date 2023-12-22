@@ -98,10 +98,11 @@ function ToDoPage(){
         }
     }
 
-    function handleEditMode(){
+    async function handleEditMode(){
         if(editMode){
             //update item in the database
-            updateToDoItem(itemDetails)
+            await updateToDoItem(itemDetails)
+            await updateToDoList();
         }
         
         setEditMode(!editMode);
@@ -114,7 +115,6 @@ function ToDoPage(){
     }
 
     function handleOpenDetails(item){
-        console.log(item)
         updateToDoList()
         setOpenDetails(true);
         setItemDetails({
@@ -125,20 +125,21 @@ function ToDoPage(){
             tag: Object.keys(item).includes("tag") && Object.keys(item.tag)[0]
         })
     }
-    function handleCloseDetails(){
+    async function handleCloseDetails(){
         setOpenDetails(false);
         setItemDetails({});
         setEditMode(false)
-        updateToDoList()
+        await updateToDoList()
     }
-    function updateToDoList(){
-        getUserToDos(id)
+    async function updateToDoList(){
+        await getUserToDos(id)
         .then(v => {
             setToDoList(v)
             setResult(v)
         })
         .catch(err => {
             setToDoList([])
+            setResult([])
         })
     }
     function updateTitle(e){
