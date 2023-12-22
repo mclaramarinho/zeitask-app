@@ -59,8 +59,13 @@ function CreateNoteDialog (props){
    return (
     <Dialog fullScreen={fullScreen} open={openCreateDialog} fullWidth onClose={() => handleCloseDialog()}>
         {wasCreated && 
-            <div>
-                <DialogTitle color={"darkgreen"} className='text-center'>New note created!</DialogTitle>
+            <div className='row w-100'>
+                <DialogTitle color={"darkgreen"} className='text-center col-11'>New note created!
+                
+                </DialogTitle>
+                <IconButton onMouseUp={() => handleCloseDialog()} className='p-0 col-1'>
+                        <Close />
+                    </IconButton>
             </div>
         }
         {!wasCreated &&
