@@ -69,14 +69,16 @@ async function signIn (email, password){
 }
 
 async function signUserOut(){
-    try{
-        signOut(auth).then(r=>{
-            return true
-        })
-        
-    }catch(err){
-        return false
-    }
+    return new Promise((resolve, reject) => {
+        try{
+            signOut(auth).then(r=>{
+                resolve(true)
+            })
+            
+        }catch(err){
+            reject(false);
+        }
+    })
 }
 
 
