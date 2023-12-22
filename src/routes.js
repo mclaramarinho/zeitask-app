@@ -9,6 +9,7 @@ import ProfilePage from './pages/ProfilePage';
 import Reauthenticate from './pages/Reauthenticate';
 import RecoverPswd from './pages/RecoverPswd';
 import NewDashboard from './pages/NewDashboard';
+import NotesPage from './pages/NotesPage';
 
 const routes = createBrowserRouter([
     {
@@ -56,6 +57,10 @@ const routes = createBrowserRouter([
     {
         path: "/recover-my-password",
         element: <RecoverPswd />
+    },
+    {
+        path: "/dashboard/:id/notes",
+        element: <NotesPage />
     }
 ])
 
