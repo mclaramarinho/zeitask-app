@@ -10,6 +10,7 @@ import done_3 from "../assets/done_3.png"
 import not_done_1 from "../assets/not_done_1.png"
 import not_done_2 from "../assets/not_done_2.png"
 import dayjs from "dayjs";
+import { getUserNotes } from "../firebase/db/notes";
 
 
 function NewDashboard(){
@@ -23,18 +24,18 @@ function NewDashboard(){
     const [itemsThisWeek, setItemsThisWeek] = useState();
     const [tags, setTags] = useState([])
     const [result, setResult] = useState([])
-
+    const [notes, setNotes] = useState([])
     useEffect(() =>{
         updateToDoList()
         const randInt = Math.ceil(Math.random() * 3);
         setDoneImage(randInt===1 ? done_1 : randInt === 2 ? done_2 : done_3);
         setNotDoneImage(randInt === 1 ? not_done_1 : not_done_2);
         getUserToDoTags().then(r => setTags(r))
+        getUserNotes().then((notes) => setNotes(Object.values(notes))).catch((err) => setNotes([]));
     },[])
 
     useEffect(() =>{
         setResult(toDoItems)
-          
     },[toDoItems])
    
     useEffect(() => {
@@ -78,12 +79,12 @@ function NewDashboard(){
     return(
         <div className="container-fluid position-fixed p-0 h-100">
             <NavBar />
-                <div className="row position-absolute mt-5 top-50 start-50 translate-middle border-box shadow border-2 gutter-x-0 overflow-y-scroll" style={{height: "75vh", width: "80vw"}}>
+                <div className="row position-absolute mt-5 top-50 start-50 translate-middle border-box shadow border-2 gutter-x-0 overflow-y-scroll-sm" style={{height: "75vh", width: "80vw"}}>
                     
-                    <div className="col-12 col-md-4 col-lg-3 mb-md-0 mb-5">
+                    <div className="col-12 col-md-4 col-lg-3 mb-md-0 mb-5 ">
 
 
-                        <div className="container py-4 position-relative border-bottom h-75" >
+                        <div className="container py-4 position-relative border-bottom h-75 overflow-y-scroll" >
                             <h5 className="row gutter-x-0 justify-content-center bolder">
                                 TO DO
                             </h5>
@@ -142,7 +143,37 @@ function NewDashboard(){
                             </div>
                         </div>
                     </div>
-                    <div className="col-12 col-md-3 col-lg-5"></div>
+                    <div className="col-12 col-md-3 col-lg-5 h-100 py-md-0 py-4">
+                        <div className="container py-4 position-relative h-100 overflow-y-scroll" >
+                            <h5 className="row gutter-x-0 justify-content-center bolder">
+                                YOUR NOTES
+                            </h5>
+                            <div className="container">
+                                <div className="row">
+                                    {notes.length > 0 && notes.map((note, index) => {
+                                        return (
+                                            <div className="col-12 my-2" key={index}>
+                                                <div className="card pointer-cursor">
+                                                    <div className="card-body row gutter-x-0">
+                                                        <div className="card-title row gutter-x-0 align-items-center">
+                                                            <h5 className="col">{note.title.slice(0, 20)}</h5>
+                                                        </div>
+                                                        <p className="card-text col">{note.content.slice(0, 50)}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
+                                    {notes.length === 0 && (
+                                        <div className="row justify-content-center text-center mt-5">
+                                            <p>No notes yet...</p>
+                                            <Button label={"Go to notes dashboard"} color={"light"} size={"small"} navigate={`/dashboard/${id}/notes`} classes="w-75 mt-2" />
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
         </div>
     )
