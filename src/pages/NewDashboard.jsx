@@ -165,8 +165,8 @@ function NewDashboard(){
                                         )
                                     })}
                                     {notes.length === 0 && (
-                                        <div className="row justify-content-center text-center mt-5">
-                                            <p>No notes yet...</p>
+                                        <div className="row m-auto justify-content-center text-center mt-5">
+                                            <p className="">No notes yet...</p>
                                             <Button label={"Go to notes dashboard"} color={"light"} size={"small"} navigate={`/dashboard/${id}/notes`} classes="w-75 mt-2" />
                                         </div>
                                     )}
