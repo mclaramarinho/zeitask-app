@@ -27,7 +27,7 @@ function NavBar(){
     }
     
     return (
-            <AppBar sx={{backgroundColor: "black", width:"100vw", marginLeft:"0", height: "12vh"}} position="static">
+            <AppBar  sx={{backgroundColor: "black", width:"100vw", marginLeft:"0"}} position="static">
                 <Toolbar>
                     <Typography className="pointer-cursor" variant="h5" letterSpacing={10} fontFamily={"inherit"} onClick={() => navigate(`/dashboard/${id}`)}>ZEITASK</Typography>
                     
