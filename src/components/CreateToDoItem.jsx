@@ -2,7 +2,7 @@ import { useTheme } from '@mui/material/styles';
 import { AppBar, Dialog, DialogTitle, IconButton, Snackbar, Switch, TextField, Typography, useMediaQuery } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Button from './Button';
-import { createToDoItem } from '../firebase/db/todos';
+import { createToDoItem, getUserToDoTags } from '../firebase/db/todos';
 import { Close } from '@mui/icons-material';
 function CreateToDoItem(props){
     const openCreateDialog = props.openCreateDialog;
@@ -11,15 +11,21 @@ function CreateToDoItem(props){
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
     const [itemDetails, setItemDetails] = useState({
-        title: "", description:"", status:false
+        title: "", description:"", status:false, tag: ""
     });
     const [displayErrorMsg, setDisplayErrorMsg] = useState(false);
     const [wasCreated, setWasCreated] = useState(false);
+    const [tags, setTags] = useState([]);
 
+    useEffect(() => {
+      getUserToDoTags().then(r => setTags(r))
+    }, [])
+    
     function handleSubmit(){
         if(itemDetails.title.length > 0){
             createToDoItem(itemDetails)
             setWasCreated(true)
+            
         }else{
             setDisplayErrorMsg(true)
         }
@@ -29,8 +35,14 @@ function CreateToDoItem(props){
             setDisplayErrorMsg(false);
         }
     }, [itemDetails])
+
+    function handleCloseDialog(){
+        setOpenCreateDialog(false);
+        setWasCreated(false);
+        setItemDetails({title: "", description:"", status:false, tag: ""});
+    }
    return (
-    <Dialog fullScreen={fullScreen} open={openCreateDialog} fullWidth onClose={() => setOpenCreateDialog(false)}>
+    <Dialog fullScreen={fullScreen} open={openCreateDialog} fullWidth onClose={() => handleCloseDialog()}>
         {wasCreated && 
             <div>
                 <DialogTitle color={"darkgreen"} className='text-center'>New item created!</DialogTitle>
@@ -42,7 +54,7 @@ function CreateToDoItem(props){
                 <div className='container px-4 py-4'>
                     <div className='row align-items-center p-1'>
                         <DialogTitle className='col-11 p-0' fontWeight={600}>CREATE NEW TO DO</DialogTitle>
-                        <IconButton onMouseUp={() => setOpenCreateDialog(false)} className='col-1 h-100 p-0'>
+                        <IconButton onMouseUp={() => handleCloseDialog()} className='col-1 h-100 p-0'>
                             <Close />
                         </IconButton>
                     </div>
@@ -62,6 +74,14 @@ function CreateToDoItem(props){
                         <textarea name='desc-field' rows={5} className='p-3 mt-1' placeholder='Your to do item description...' 
                                 onChange={(e) => setItemDetails(prev => {return {...prev, description: e.target.value}})}
                         />
+                    </div>
+                    <div className='row mt-5 gutter-x-0'>
+                        <label htmlFor="desc-field">Select a tag</label>
+                        <select onChange={(e) => setItemDetails(prev => {return {...prev, tag: e.target.value}})} className='form-select' name="" id="">
+                            {tags.length > 0 && tags.map(tag => {
+                                return <option style={{backgroundColor: tag.tagColor+"BF"}} value={tag.tagName}>{tag.tagName}</option>
+                            })}
+                        </select>
                     </div>
                     <div className="row mt-5">
                         <div className="col-6">
