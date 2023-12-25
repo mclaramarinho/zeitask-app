@@ -4,6 +4,14 @@ import { whoIsSignedIn } from "../auth";
 import dayjs from "dayjs";
 
 
+//TO DO: try-catch blocks for all functions
+
+/**
+ * @todo - return false if there is an error
+ * @params - none
+ * @returns {Promise<Array>} - returns an array of objects with the user's todo tags
+ * @returns {Promise<false>} - returns false if there is an error
+ */
 async function getUserToDoTags(){
     const username = await whoIsSignedIn("username");
 
@@ -20,6 +28,11 @@ async function getUserToDoTags(){
     return tags;
 }
 
+/**
+ * @description - creates a new to do tag for the user
+ * @param {Object} tag: {tagName: string, tagColor: string}
+ * @returns - true if the tag was created successfully
+ */
 async function createUserToDoTag(tag){
     try{
         const username = await whoIsSignedIn("username");
@@ -34,6 +47,11 @@ async function createUserToDoTag(tag){
     }
 }
 
+/**
+ * @description - deletes a to do tag for the user
+ * @param {string} tagName 
+ * @returns - true if the tag was deleted successfully OR false if there was an error
+ */
 async function deleteUserToDoTag(tagName){
     try{
         const username = await whoIsSignedIn("username");
@@ -46,6 +64,12 @@ async function deleteUserToDoTag(tagName){
 }
 
 // retrieve user todo cards' content
+/**
+ * @description - retrieves the user's todo cards
+ * @params - none
+ * @returns {Promise<Array>} - returns an array of objects with the user's todo cards
+ * @returns {Promise<false>} - returns false if there is an error
+ */
 async function getUserToDos(){
     const username = await whoIsSignedIn("username")
     const actualRef = ref(db, `users/${username}/todo-cards`);
@@ -58,10 +82,21 @@ async function getUserToDos(){
         })
         return res;
     }catch (error){
-        throw error;
+        return false;
     }
 }  
 
+
+/**
+ * @todo - surround with try-catch block
+ * @todo - get the current signed in user - stop passing it as a parameter
+ * @todo - return false if there is an error
+ * 
+ * @description - retrieves the key of the todo card
+ * @param {string} title 
+ * @param {string} username 
+ * @returns {Promise<string>} - returns the key of the todo card
+ */
 async function getToDoCardKey(title, username){
     const actualRef = ref(db, `users/${username}/todo-cards`);
     const snapshot = await get(actualRef);
@@ -75,7 +110,15 @@ async function getToDoCardKey(title, username){
     return cardToUpdate;
 }
 
-//change user todo status
+/**
+ * @todo - surround with try-catch block
+ * @todo - return false if there is an error
+ * 
+ * @description - changes the status of the todo card
+ * @param {string} title 
+ * @param {boolean} newStatus 
+ * @returns {Promise<void>} - returns void
+ */
 async function changeToDoStatus(title, newStatus){
     const username = await whoIsSignedIn();
     let cardToUpdate = await getToDoCardKey(title, username)
@@ -94,8 +137,12 @@ async function changeToDoStatus(title, newStatus){
 
 
 /**
+ * @todo - surround with try-catch block
+ * @todo - return false if there is an error
+ * 
+ * @description - updates the todo card
  * @param toDoItem: {title: string, newTitle: string, description: string, status: boolean, tag: string}
- * @returns void
+ * @returns {Promise<void>} - returns void
  */
 async function updateToDoItem(toDoItem){
     const username = await whoIsSignedIn();
@@ -115,6 +162,14 @@ async function updateToDoItem(toDoItem){
     return update(ref(db), updates)
 }
 
+/**
+ * @todo - surround with try-catch block
+ * @todo - return false if there is an error
+ * 
+ * @description - deletes user's todo card
+ * @param {string} title - title of the to do card to be deleted 
+ * @returns {Promise<void>} - returns void
+ */
 async function deleteToDoItem(title){
     const username = await whoIsSignedIn();
     let cardToDelete = await getToDoCardKey(title, username);
@@ -122,6 +177,16 @@ async function deleteToDoItem(title){
     return remove(ref(db,  `/users/${username}/todo-cards/${cardToDelete}`))
 }
 
+
+/**
+ * @todo - surround with try-catch block
+ * @todo - return false if there is an error
+ * @todo - return true if the item was created successfully
+ * 
+ * @description - creates a new todo card for the user
+ * @param {Object} item: {title: string, description: string, status: boolean, tag: string} 
+ * @returns {Promise<void>} - returns void
+ */
 async function createToDoItem(item){
     const username = await whoIsSignedIn();
     const actualRef = ref(db, `users/${username}/todo-cards`);
