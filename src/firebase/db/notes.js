@@ -2,6 +2,11 @@ import { get, ref, remove, set, update } from "firebase/database";
 import { whoIsSignedIn } from "../auth";
 import { db } from "../setup";
 
+/**
+ * @params - none
+ * @description - retrieves all the notes of the current signed in user from the database
+ * @returns {Promise<Object>} - returns an object with all the notes of the user OR false if there is an error
+ */
 async function getUserNotes(){
     const username = await whoIsSignedIn("username")
     const actualRef = ref(db, `users/${username}/notes`);
@@ -14,16 +19,19 @@ async function getUserNotes(){
                 res[item.key] = item.val();
             })
             return res;
-        }else{
-            // createUserNotesPath();
         }
     }catch (error){
-        throw error;
+        return false;
     }
 }
 
+
+/**
+ * @params - none
+ * @description - creates a path for the user's notes in the database
+ * @returns - true if the path was created successfully OR false if there was an error
+ */
 async function createUserNotesPath(){
-    
     try{
         const username = await whoIsSignedIn("username")
         const actualRef = ref(db, `users/${username}`);
@@ -34,12 +42,20 @@ async function createUserNotesPath(){
         })
         res["notes"] = {"note0000001": {title: "example note", content: "this is an example note", date: "12-22-2023"}};
         set(actualRef, res).then(() => {console.log("success")}).catch((error) => {console.log(error)})
+        return true;
 
     }catch (error){
-        throw error;
+        return false;
     }
 }
 
+
+/**
+ * @description - edits a note in the database
+ * @param {string} key 
+ * @param {Object} values 
+ * @returns - true if the note was edited successfully OR false if there was an error
+ */
 async function editNote(key, values){
     try{
         const username = await whoIsSignedIn("username")
@@ -51,6 +67,12 @@ async function editNote(key, values){
     }
 }
 
+
+/**
+ * @description - creates a new note in the database
+ * @param {Object} note:{title, content, date} 
+ * @returns - true if the note was created successfully OR false if there was an error
+ */
 async function createNewNote(note){
     try{
         const username = await whoIsSignedIn("username");
@@ -69,11 +91,16 @@ async function createNewNote(note){
         set(newRef, note);
         return true;
     }catch(err){
-        console.log(err)
         return false;
     }
 }
 
+/**
+ * @async - true
+ * @description - deletes a note in the database
+ * @param {string} key 
+ * @returns  - true if the note was deleted successfully OR false if there was an error
+ */
 async function deleteNote(key){
     try{
         const username = await whoIsSignedIn("username");
@@ -81,7 +108,6 @@ async function deleteNote(key){
         remove(actualRef);
         return true;
     }catch(err){
-        console.log(err)
         return false;
     }
 }
